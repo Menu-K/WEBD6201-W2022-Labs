@@ -1,2 +1,0 @@
-# WEBD6201-W2022-Lab-2
-Lab 2 for WEBD6201
