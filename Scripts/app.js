@@ -242,6 +242,7 @@
         }
     }
 
+
     function DisplayEditPage()
     {
         console.log("Edit Page");
@@ -310,6 +311,7 @@
         }
     }
 
+
     function DisplayLoginPage()
     {
         console.log("Login Page");
@@ -364,7 +366,7 @@
         $("#cancelButton").on("click", function()
         {
             // clear the login form
-            document.forms[0].reset();
+            //document.forms[0].reset();
 
             // return to the home page
             location.href = "/home";
@@ -376,6 +378,14 @@
         // if user is logged in, then...
         if(sessionStorage.getItem("user"))
         {
+                        
+            //  insert username between the Contact Us link and the Login/Logout link
+            let userName = sessionStorage.getItem("user").split(',')[3];
+            let contactListNavbar = $("a:contains('Contact Us')").parent();
+            let user = sessionStorage.getItem("user").split(',');
+            console.log(user);
+            contactListNavbar.after(`<li class="nav-item"><a class="nav-link disabled">${userName}</a></li>`);
+
             // swap out the login link for logout
             $("#login").html(
                 `<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`
@@ -392,9 +402,85 @@
         }
     }
 
+    function RegisterField(input_field_ID, regular_expression, error_message)
+    {
+        let messageArea = $("#messageArea").hide();
+        
+        $("#" + input_field_ID).on("blur", function()
+        {
+            let inputFieldText = $(this).val();
+
+            if(!regular_expression.test(inputFieldText))
+            {
+                $(this).trigger("focus").trigger("select"); 
+                messageArea.addClass("alert alert-danger").text(error_message).show(); 
+            }
+            else
+            {
+                messageArea.removeAttr("class").hide();
+            }
+        });
+
+        
+        /**
+         * Takes both passwords that user inputted and validates/compares them if both are the same
+         *
+         * @param {string} password
+         * @param {string} validPassword
+         * @param {boolean} isValid
+         */
+        function ValidPassword(password, validPassword)
+        {
+            let isValid = true;
+            let password1 = password.split("");
+            let password2 = validPassword.split("");
+
+            if(password1.length == password2.length)
+            {
+                for(i = 0; i < password2.length; i++)
+                {
+                    if(password1[i] != password2[i])
+                    {
+                        console.log("Passwords do not match");
+                        isValid = false;
+                    }
+                }
+            }
+            else
+            {
+                isValid = false;
+            }
+    
+            if(isValid == false)
+            {
+                return isValid;
+            }
+            else
+            {
+                return isValid;
+            }
+        }
+    function RegisterFormValidation()
+    {
+        ValidateField("firstName", /^([A-Z][a-z]{1,})$/,"Error. First Name must be at least 2 characters long.");
+        ValidateField("lastName", /^([A-Z][a-z]{1,})$/,"Error. Last Name must be at least 2 characters long.");
+        ValidateField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Error. Please enter a valid Email Address.");
+
+        // Taken and thanks to the user at StackOverflow [https://stackoverflow.com/questions/10868308/regular-expression-a-za-z0-9]
+        ValidateField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        ValidateField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+
+        if(document.getElementById("messageArea"))
+        {
+            document.getElementById("messageArea").id = "errorMessage";
+        }
+    }
     function DisplayRegisterPage()
     {
+        RegisterFormValidation();
         console.log("Register Page");
+
+        
     }
 
     function Display404()
