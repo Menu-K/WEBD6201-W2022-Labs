@@ -439,15 +439,7 @@ class User
     {
         // if user is logged in, then...
         if(sessionStorage.getItem("user"))
-        {
-                        
-            //  insert username between the Contact Us link and the Login/Logout link
-            let userName = sessionStorage.getItem("user").split(',')[3];
-            let contactListNavbar = $("a:contains('Contact Us')").parent();
-            let user = sessionStorage.getItem("user").split(',');
-            console.log(user);
-            contactListNavbar.after(`<li class="nav-item"><a class="nav-link disabled">${userName}</a></li>`);
-
+        {       
             // swap out the login link for logout
             $("#login").html(
                 `<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`
@@ -460,7 +452,13 @@ class User
                 
                 // redirect back to login page
                 location.href = "/login";
-            });
+            })
+                //  insert username between the Contact Us link and the Login/Logout link
+                let userName = sessionStorage.getItem("user").split(',')[3];
+                let contactListNavbar = $("a:contains('Contact Us')").parent();
+                let user = sessionStorage.getItem("user").split(',');
+                console.log(user);
+                contactListNavbar.after(`<li class="nav-item"><a class="nav-link disabled">${userName}</a></li>`);
         }
     }
 
@@ -523,7 +521,8 @@ class User
                 return isValid;
             }
         }
-    function RegisterValidation()
+
+    function RegisterFormValidation()
     {
         ValidateField("firstName", /^([A-Z][a-z]{1,})$/,"Error. First Name must be at least 2 characters long.");
         ValidateField("lastName", /^([A-Z][a-z]{1,})$/,"Error. Last Name must be at least 2 characters long.");
@@ -538,6 +537,7 @@ class User
             document.getElementById("errorMessage").id = "errorMessage";
         }
     }
+
     function DisplayRegisterPage()
     {
         console.log("Register Page");
@@ -546,8 +546,9 @@ class User
         let errorMessage = $("#ErrorMessage");
         emailAddress.text = "Email";
         password.text = "Password";
-        RegisterValidation(); 
+        RegisterFormValidation(); 
         
+        // Registration Page Validation
         $("#submitButton").on("click", function(event)
         {
             EventTarget.preventDefault();
