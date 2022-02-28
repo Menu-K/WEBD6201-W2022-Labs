@@ -377,8 +377,8 @@ class User
     function DisplayLoginPage()
     {
         console.log("Login Page");
-        let errorMessage = $("#errorMessage");
-        errorMessage.hide();
+        let messageArea = $("#messageArea");
+        messageArea.hide();
 
         $("#loginButton").on("click", function()
         {
@@ -504,7 +504,7 @@ class User
                 {
                     if(password1[i] != password2[i])
                     {
-                        console.log("Error. Invalid Password");
+                        console.log("Error. Passwords do not match");
                         isValid = false;
                     }
                 }
@@ -546,7 +546,7 @@ class User
         let errorMessage = $("#ErrorMessage");
         emailAddress.text = "Email";
         password.text = "Password";
-        RegistrationValidation(); 
+        RegisterValidation(); 
         
         $("#submitButton").on("click", function(event)
         {
