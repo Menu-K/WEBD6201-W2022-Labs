@@ -195,7 +195,7 @@ class User
      */
     function ValidateField(input_field_ID, regular_expression, error_message)
     {
-        let messageArea = $("#messageArea").hide();
+        let errorMessage = $("#errorMessage").hide();
         
         $("#" + input_field_ID).on("blur", function()
         {
@@ -204,11 +204,11 @@ class User
             if(!regular_expression.test(inputFieldText))
             {
                 $(this).trigger("focus").trigger("select"); 
-                messageArea.addClass("alert alert-danger").text(error_message).show(); 
+                errorMessage.addClass("alert alert-danger").text(error_message).show(); 
             }
             else
             {
-                messageArea.removeAttr("class").hide();
+                errorMessage.removeAttr("class").hide();
             }
         });
     }
@@ -372,8 +372,8 @@ class User
     function DisplayLoginPage()
     {
         console.log("Login Page");
-        let messageArea = $("#messageArea");
-        messageArea.hide();
+        let errorMessage = $("#errorMessage");
+        errorMessage.hide();
 
         $("#loginButton").on("click", function()
         {
@@ -406,7 +406,7 @@ class User
                     sessionStorage.setItem("user", newUser.serialize());
 
                     // hide any error message
-                    messageArea.removeAttr("class").hide();
+                    errorMessage.removeAttr("class").hide();
 
                     // redirect the user to the secure area of the site - contact-list.html
                     location.href = "/contact-list";
@@ -415,7 +415,7 @@ class User
                 {
                     // display an error message
                     $("#username").trigger("focus").trigger("select");
-                    messageArea.addClass("alert alert-danger").text("Error: Invalid Login Credentials").show();
+                    errorMessage.addClass("alert alert-danger").text("Error: Invalid Login Credentials").show();
                 }
             });
         });
@@ -461,7 +461,7 @@ class User
 
     function RegisterField(input_field_ID, regular_expression, error_message)
     {
-        let messageArea = $("#messageArea").hide();
+        let errorMessage = $("#errorMessage").hide();
         
         $("#" + input_field_ID).on("blur", function()
         {
@@ -470,11 +470,11 @@ class User
             if(!regular_expression.test(inputFieldText))
             {
                 $(this).trigger("focus").trigger("select"); 
-                messageArea.addClass("alert alert-danger").text(error_message).show(); 
+                errorMessage.addClass("alert alert-danger").text(error_message).show(); 
             }
             else
             {
-                messageArea.removeAttr("class").hide();
+                errorMessage.removeAttr("class").hide();
             }
         });
     }
@@ -499,7 +499,7 @@ class User
                 {
                     if(password1[i] != password2[i])
                     {
-                        console.log("Passwords do not match");
+                        console.log("Error. Invalid Password");
                         isValid = false;
                     }
                 }
@@ -518,7 +518,7 @@ class User
                 return isValid;
             }
         }
-    function RegisterFormValidation()
+    function RegisterValidation()
     {
         ValidateField("firstName", /^([A-Z][a-z]{1,})$/,"Error. First Name must be at least 2 characters long.");
         ValidateField("lastName", /^([A-Z][a-z]{1,})$/,"Error. Last Name must be at least 2 characters long.");
@@ -528,9 +528,9 @@ class User
         ValidateField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
         ValidateField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
 
-        if(document.getElementById("messageArea"))
+        if(document.getElementById("errorMessage"))
         {
-            document.getElementById("messageArea").id = "errorMessage";
+            document.getElementById("errorMessage").id = "errorMessage";
         }
     }
     function DisplayRegisterPage()
@@ -541,7 +541,62 @@ class User
         let errorMessage = $("#ErrorMessage");
         emailAddress.text = "Email";
         password.text = "Password";
-        RegistrationFormValidation();    
+        RegistrationValidation(); 
+        
+        $("#submitButton").on("click", function(event)
+        {
+            EventTarget.preventDefault();
+            if(firstName.value != null)
+            {
+                if(lastName.value != null)
+                {
+                    if(emailAddress.value != null)
+                    {
+                        if(password.value != null)
+                        {
+                            if(ValidPassword(password.value, validPassword.value) == false)
+                            {
+                                errorMessage.show().addClass("alert alert-danger").text("Error. Passwords do not match");
+                                $("#password").trigger("focus");
+                                $("#password").trigger("select");
+                            }
+                            else
+                            {
+                                let newUser = new User(firstName.value, lastName.value, emailAddress.value, password.value);
+                                console.log(newUser.toString() + "\nCreated!");
+                                FirstName.value = "";
+                                lastName.value = "";
+                                emailAddress.value = "";
+                                password.value = "";
+                                confirmPassword.value = "";
+                            }
+                        }
+                        else
+                        {
+                            errorMessage.show().addClass("alert alert-danger").text("Error. Password field cannot be empty.");
+                            $("#password").trigger("focus");
+                            $("#password").trigger("select");    
+                        } 
+                    }
+                    else
+                    {
+                        errorMessage.show().addClass("alert alert-danger").text("Error. Email Address field cannot be empty.");
+                        $("#password").trigger("focus");
+                        $("#password").trigger("select");    
+                    }
+                }
+                else
+                {
+                    errorMessage.show().addClass("alert alert-danger").text("Error. Last Name field cannot be empty.");
+                    $("#password").trigger("focus");
+                    $("#password").trigger("select");   
+                }
+            }
+                errorMessage.show().addClass("alert alert-danger").text("Error. First Name field cannot be empty.");
+                $("#password").trigger("focus");
+                $("#password").trigger("select");  
+            
+        });
     }
 
     function Display404()
