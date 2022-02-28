@@ -3,43 +3,46 @@ class User
         // TODO: missing Getters and Setters
 
         // constructor
-        constructor(displayName = "", emailAddress = "", username ="", password = "")
+        constructor(firstName = "", lastName = "", emailAddress = "", password = "")
         {
-            this.DisplayName = displayName;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.UserName = firstName.toLowerCase() + lastName.toLowerCase();
             this.EmailAddress = emailAddress;
-            this.Username = username;
             this.Password = password;
         }
 
         // overriden methods
         toString()
         {
-            return `Display Name : ${this.DisplayName}\nEmail Address : ${this.EmailAddress}\nUsername : ${this.Username}`;
+            return `Name : ${this.FirstName}${this.LastName}\nEmail Address : ${this.EmailAddress}`;
         }
 
         // utility methods
         toJSON()
         {
             return {
-                "DisplayName": this.DisplayName,
+                "FirstName": this.FirstName,
+                "LastName": this.LastName,
                 "EmailAddress": this.EmailAddress,
-                "Username": this.Username
+                "Password": this.Password,
             }
         }
 
         fromJSON(data)
         {
-            this.DisplayName = data.DisplayName;
+            this.FirstName = data.firstName;
+            this.LastName = data.lastName;
             this.EmailAddress = data.EmailAddress;
-            this.Username = data.Username;
+            this.UserName = data.UserName;
             this.Password = data.Password;
         }
 
         serialize()
         {
-            if(this.DisplayName !== "" && this.EmailAddress !== "" && this.Username !== "")
+            if(this.FirstName !== "" && this.LastName !== "" && this.EmailAddress !== "" && this.Password !== "")
             {
-                return `${this.DisplayName},${this.EmailAddress},${this.Username}`;
+                return `${this.FirstName},${this.LastName},${this.EmailAddress},${this.Password}`;
             }
             console.error("One or more properties of the User Object are missing or invalid");
             return null;
@@ -48,9 +51,11 @@ class User
         deserialize(data) // assume that data is in a comma-separated format (string array of properties)
         {
             let propertyArray = data.split(",");
-            this.DisplayName = propertyArray[0];
-            this.EmailAddress = propertyArray[1];
-            this.Username = propertyArray[2];
+            this.FirstName = propertyArray[0];
+            this.LastName = propertyArray[1];
+            this.UserName = propertyArray[2];
+            this.EmailAddress = propertyArray[3];
+            this.Password = propertyArray[4];
         }
     }
 
