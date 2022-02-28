@@ -524,13 +524,13 @@ class User
 
     function RegisterFormValidation()
     {
-        ValidateField("firstName", /^([A-Z][a-z]{1,})$/,"Error. First Name must be at least 2 characters long.");
-        ValidateField("lastName", /^([A-Z][a-z]{1,})$/,"Error. Last Name must be at least 2 characters long.");
-        ValidateField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Error. Please enter a valid Email Address.");
+        RegisterField("firstName", /^([A-Z][a-z]{1,})$/,"Error. First Name must be at least 2 characters long.");
+        RegisterField("lastName", /^([A-Z][a-z]{1,})$/,"Error. Last Name must be at least 2 characters long.");
+        RegisterField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Error. Please enter a valid Email Address.");
 
         // Taken and thanks to the user at StackOverflow [https://stackoverflow.com/questions/10868308/regular-expression-a-za-z0-9]
-        ValidateField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
-        ValidateField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        RegisterField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        RegisterField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
 
         if(document.getElementById("errorMessage"))
         {
