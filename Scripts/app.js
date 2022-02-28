@@ -549,7 +549,7 @@ class User
         RegisterFormValidation(); 
         
         // Registration Page Validation
-        $("#submitButton").on("click", function(event)
+        $('#submitButton').on("click", function(event)
         {
             EventTarget.preventDefault();
             if(firstName.value != null)
