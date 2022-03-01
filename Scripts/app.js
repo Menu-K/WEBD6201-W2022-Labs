@@ -551,7 +551,7 @@ class User
         // Registration Page Validation
         $('#submitButton').on("click", function(event)
         {
-            EventTarget.preventDefault();
+            event.preventDefault();
             if(firstName.value != null)
             {
                 if(lastName.value != null)
