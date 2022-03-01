@@ -529,8 +529,8 @@ class User
         RegisterField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Error. Please enter a valid Email Address.");
 
         // Taken and thanks to the user at StackOverflow [https://stackoverflow.com/questions/10868308/regular-expression-a-za-z0-9]
-        ValidPassword("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
-        ValidPassword("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        RegisterField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        RegisterField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
     }
 
     function DisplayRegisterPage()
@@ -542,61 +542,22 @@ class User
         emailAddress.text = "Email";
         password.text = "Password";
         RegisterFormValidation(); 
-        valid
+        ValidPassword();
+
+
         // Registration Page Validation
         $("#submitButton").on("click", function(event)
         {
             event.preventDefault();
-            if(firstName.value != null)
-            {
-                if(lastName.value != null)
-                {
-                    if(emailAddress.value != null)
-                    {
-                        if(password.value != null)
-                        {
-                            if(ValidPassword(password.value, confirmPassword.value) == false)
-                            {
-                                errorMessage.show().addClass("alert alert-danger").text("Error. Passwords do not match");
-                                $("#password").trigger("focus");
-                                $("#password").trigger("select");
-                            }
-                            else
-                            {
-                                let newUser = new User(firstName.value, lastName.value, emailAddress.value, password.value);
-                                console.log(newUser.toString() + "\nCreated!");
-                                FirstName.value = "";
-                                lastName.value = "";
-                                emailAddress.value = "";
-                                password.value = "";
-                                confirmPassword.value = "";
-                            }
-                        }
-                        else
-                        {
-                            errorMessage.show().addClass("alert alert-danger").text("Error. Password field cannot be empty.");
-                            $("#password").trigger("focus");
-                            $("#password").trigger("select");    
-                        } 
-                    }
-                    else
-                    {
-                        errorMessage.show().addClass("alert alert-danger").text("Error. Email Address field cannot be empty.");
-                        $("#password").trigger("focus");
-                        $("#password").trigger("select");    
-                    }
-                }
-                else
-                {
-                    errorMessage.show().addClass("alert alert-danger").text("Error. Last Name field cannot be empty.");
-                    $("#password").trigger("focus");
-                    $("#password").trigger("select");   
-                }
-            }
-                errorMessage.show().addClass("alert alert-danger").text("Error. First Name field cannot be empty.");
-                $("#password").trigger("focus");
-                $("#password").trigger("select");  
-            
+            let user = new core.user();
+            console.log(newUser.toString() + "\nCreated!");
+            FirstName.value = "";
+            lastName.value = "";
+            emailAddress.value = "";
+            password.value = "";
+            confirmPassword.value = "";
+
+            localStorage.setItem("user", user.serialize());
         });
     }
 
