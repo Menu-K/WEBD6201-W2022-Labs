@@ -200,7 +200,7 @@ class User
      */
     function ValidateField(input_field_ID, regular_expression, error_message)
     {
-        let errorMessage = $("#errorMessage").hide();
+        let messageArea = $("#messageArea").hide();
         
         $("#" + input_field_ID).on("blur", function()
         {
@@ -411,7 +411,7 @@ class User
                     sessionStorage.setItem("user", newUser.serialize());
 
                     // hide any error message
-                    errorMessage.removeAttr("class").hide();
+                    messageArea.removeAttr("class").hide();
 
                     // redirect the user to the secure area of the site - contact-list.html
                     location.href = "/contact-list";
@@ -420,7 +420,7 @@ class User
                 {
                     // display an error message
                     $("#username").trigger("focus").trigger("select");
-                    errorMessage.addClass("alert alert-danger").text("Error: Invalid Login Credentials").show();
+                    messageArea.addClass("alert alert-danger").text("Error: Invalid Login Credentials").show();
                 }
             });
         });
@@ -531,11 +531,6 @@ class User
         // Taken and thanks to the user at StackOverflow [https://stackoverflow.com/questions/10868308/regular-expression-a-za-z0-9]
         RegisterField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
         RegisterField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
-
-        if(document.getElementById("errorMessage"))
-        {
-            document.getElementById("errorMessage").id = "errorMessage";
-        }
     }
 
     function DisplayRegisterPage()
@@ -549,7 +544,7 @@ class User
         RegisterFormValidation(); 
         
         // Registration Page Validation
-        $('#submitButton').on("click", function(event)
+        $("#submitButton").on("click", function(event)
         {
             event.preventDefault();
             if(firstName.value != null)
@@ -560,7 +555,7 @@ class User
                     {
                         if(password.value != null)
                         {
-                            if(ValidPassword(password.value, validPassword.value) == false)
+                            if(ValidPassword(password.value, confirmPassword.value) == false)
                             {
                                 errorMessage.show().addClass("alert alert-danger").text("Error. Passwords do not match");
                                 $("#password").trigger("focus");
