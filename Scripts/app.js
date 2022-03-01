@@ -529,8 +529,8 @@ class User
         RegisterField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Error. Please enter a valid Email Address.");
 
         // Taken and thanks to the user at StackOverflow [https://stackoverflow.com/questions/10868308/regular-expression-a-za-z0-9]
-        RegisterField("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
-        RegisterField("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        ValidPassword("password", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
+        ValidPassword("confirmPassword", /^([a-zA-Z0-9._-]{6,})$/, "Error. Password must be 6 characters long.");
     }
 
     function DisplayRegisterPage()
@@ -542,7 +542,7 @@ class User
         emailAddress.text = "Email";
         password.text = "Password";
         RegisterFormValidation(); 
-        
+        valid
         // Registration Page Validation
         $("#submitButton").on("click", function(event)
         {
