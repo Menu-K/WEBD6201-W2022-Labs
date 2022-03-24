@@ -233,6 +233,7 @@ Date:           2022-03-23
             $("#logout").on("click", function () {
                 sessionStorage.clear();
                 $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
+                $("#task-list").html(``);
                 AddNavigationEvents();
                 LoadLink("login");
             });
@@ -281,7 +282,8 @@ Date:           2022-03-23
 
     function DisplayTaskList() 
     {
-
+        let messageArea = $("#messageArea");
+        messageArea.hide();
     }
 
     function AddNewTask()
