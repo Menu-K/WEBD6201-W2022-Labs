@@ -228,12 +228,15 @@ Date:           2022-03-23
         }
     }
     function CheckLogin() {
+        // 2. D) TaskList Security
+        $("#task-list").hide();
         if (sessionStorage.getItem("user")) {
+            // 2. D) TaskList Security
+        $("#task-list").show();
             $("#login").html(`<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`);
             $("#logout").on("click", function () {
                 sessionStorage.clear();
                 $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
-                $("#task-list").html(``);
                 AddNavigationEvents();
                 LoadLink("login");
             });
@@ -259,7 +262,6 @@ Date:           2022-03-23
                 }
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
-                   $("#task-list").html(`<a id="task-list" class="nav-link" data="task-list"><i class="fa-solid fa-list-check"></i> TasksList</a>`);
                     messageArea.removeAttr("class").hide();
                     LoadLink("contact-list");
                 }
