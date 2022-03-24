@@ -259,6 +259,7 @@ Date:           2022-03-23
                 }
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
+                   $("#task-list").html(`<a id="task-list" class="nav-link" data="task-list"><i class="fa-solid fa-list-check"></i> TasksList</a>`);
                     messageArea.removeAttr("class").hide();
                     LoadLink("contact-list");
                 }
@@ -279,11 +280,46 @@ Date:           2022-03-23
     }
     function Display404Page() {
     }
-
+    // Single Page Application
+    // 2. C) TaskList Callback
+    
     function DisplayTaskList() 
     {
         let messageArea = $("#messageArea");
         messageArea.hide();
+        let inputTask = $("#taskTextInput");
+        $("newTaskButton").on("click", function () {
+            AddNewTask();
+        });
+        inputTask.on("keypress", function (event) {
+            if (event.key == "Enter") {
+                AddNewTask();
+            }
+        });
+        $("ul").on("click", ".editButton", function () {
+            let editText = $(this).parent().parent().children(".editTextInput");
+            let text = $(this).parent().parent().text();
+            let editTextValue = editText.val();
+            editText.val(text).show().trigger("select");
+            editText.on("keypress", function (event) {
+                if (event.key == "Enter") {
+                    if (editText.val() != "" && editTextValue.charAt(0) != " ") {
+                        editText.hide();
+                        $(this).parent().children("#taskText").text(editTextValue);
+                        messageArea.removeAttr("class").hide();
+                    }
+                    else {
+                        editText.trigger("focus").trigger("select");
+                        messageArea.show().addClass("alert alert-danger").text("Please enter a valid Task.");
+                    }
+                }
+            });
+        });
+        $("ul").on("click", ".deleteButton", function () {
+            if (confirm("Are you sure?")) {
+                $(this).closest("li").remove();
+            }
+        });
     }
 
     function AddNewTask()
