@@ -1,7 +1,7 @@
 {
-  "name": "webd6201-w2022-ice7",
+  "name": "webd6201-w2022-lab3",
   "version": "1.0.0",
-  "description": "demo project for ice7",
+  "description": "starter project for lab3",
   "main": "index.js",
   "author": "Menushan Karunakaran",
   "license": "MIT",
@@ -12,6 +12,6 @@
     "jquery": "^3.6.0"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.13"
+    "@types/jquery": "^3.5.14"
   }
 }
