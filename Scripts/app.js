@@ -1,4 +1,5 @@
 /*
+            Lab 3: Fun with Ajax
 Name:           Menushan Karunakaran
 Student ID:     100709847
 Date:           2022-03-23
