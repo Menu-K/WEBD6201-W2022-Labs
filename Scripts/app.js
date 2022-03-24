@@ -282,7 +282,7 @@ Date:           2022-03-23
     }
     // Single Page Application
     // 2. C) TaskList Callback
-    
+
     function DisplayTaskList() 
     {
         let messageArea = $("#messageArea");
@@ -324,7 +324,29 @@ Date:           2022-03-23
 
     function AddNewTask()
     {
-
+let messageArea = $("#messageArea");
+        messageArea.hide();
+        let taskInput = $("#taskTextInput");
+        let taskInputValue = taskInput.val();
+        if (taskInput.val() != "" && taskInputValue.charAt(0) != " ") {
+            let newElement = `
+               <li class="list-group-item" id="task">
+               <span id="taskText">${taskInput.val()}</span>
+               <span class="float-end">
+                   <button class="btn btn-outline-primary btn-sm editButton"><i class="fas fa-edit"></i>
+                   <button class="btn btn-outline-danger btn-sm deleteButton"><i class="fas fa-trash-alt"></i></button>
+               </span>
+               <input type="text" class="form-control edit-task editTextInput">
+               </li>
+               `;
+            $("#task-List").append(newElement);
+            messageArea.removeAttr("class").hide();
+            taskInput.val("");
+        }
+        else {
+            taskInput.trigger("focus").trigger("select");
+            messageArea.show().addClass("alert alert-danger").text("Please enter a valid Task.");
+        }
     }
 
 
