@@ -38,6 +38,7 @@
             $(this).removeClass("active");
         });
 
+        
         $(`li>a:contains(${document.title})`).addClass("active"); // updates the Active link on Navigation items
 
         CheckLogin();
@@ -387,9 +388,11 @@
 
     function CheckLogin(): void
     {
+        $("#task-list").hide();
         // if user is logged in
         if(sessionStorage.getItem("user"))
         {
+            $("#task-list").show();
             // swap out the login link for logout
             $("#login").html(
                 `<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`
