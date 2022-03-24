@@ -1,8 +1,18 @@
+/*
+Name:           Menushan Karunakaran
+Student ID:     100709847
+Date:           2022-03-23
+*/
+
+
+
 "use strict";
 (function () {
     function AuthGuard() {
         let protected_routes = [
-            "contact-list"
+            "contact-list",
+            // 2. D) Tasklist Security
+            "task-list"
         ];
         if (protected_routes.indexOf(router.ActiveLink) > -1) {
             if (!sessionStorage.getItem("user")) {
@@ -268,6 +278,19 @@
     }
     function Display404Page() {
     }
+
+    function DisplayTaskList() 
+    {
+
+    }
+
+    function AddNewTask()
+    {
+
+    }
+
+
+
     function ActiveLinkCallBack() {
         switch (router.ActiveLink) {
             case "home": return DisplayHomePage;
@@ -279,6 +302,8 @@
             case "edit": return DisplayEditPage;
             case "login": return DisplayLoginPage;
             case "register": return DisplayRegisterPage;
+            // 2. C) Tasklist Callback
+            case "task-list": return DisplayTaskList;
             case "404": return Display404Page;
             default:
                 console.error("ERROR: callback does not exist: " + router.ActiveLink);
